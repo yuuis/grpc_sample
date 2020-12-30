@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"math/rand"
 	"sync"
 	"time"
@@ -35,12 +36,13 @@ func NewBakerHandler() *BakerHandler {
 }
 
 // Bake a pancake of the specified menu and return as response
-func (h *BakerHandler) Bake(_ context.Context, req *api.BakeRequest) (*api.BakeResponse, error) {
+func (h *BakerHandler) Bake(ctx context.Context, req *api.BakeRequest) (*api.BakeResponse, error) {
 	// validation
 	if req.Menu == api.Pancake_UNKNOWN || req.Menu > api.Pancake_SPICY_CURRY {
 		return nil, status.Errorf(codes.InvalidArgument, "select a pancake from the menu")
 	}
 
+	fmt.Printf("Bake pancake requested by %s\n", ctx.Value("UserName"))
 	// bake a pancake and update the report
 	now := time.Now()
 	panCake := &api.Pancake{
@@ -61,7 +63,9 @@ func (h *BakerHandler) Bake(_ context.Context, req *api.BakeRequest) (*api.BakeR
 }
 
 // Report the number of pancakes baked
-func (h *BakerHandler) Report(_ context.Context, req *api.ReportRequest) (*api.ReportResponse, error) {
+func (h *BakerHandler) Report(ctx context.Context, req *api.ReportRequest) (*api.ReportResponse, error) {
+	fmt.Printf("Report requested by %s\n", ctx.Value("UserName"))
+
 	bakeCounts := make([]*api.Report_BakeCount, 0)
 
 	h.report.Lock()
