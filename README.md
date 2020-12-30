@@ -71,4 +71,4 @@ grpc_cli ls localhost:50051 pancake.maker.PancakeBakerService -l
 
 ## Reference
 
-- [スターティングgRPC](https://www.amazon.co.jp/%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0gRPC-%E6%8A%80%E8%A1%93%E3%81%AE%E6%B3%89%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%EF%BC%88NextPublishing%EF%BC%89-%E6%AD%A6%E4%B8%8A-%E5%B0%86%E6%A8%B9-ebook/dp/B087R87L6Z)
+[スターティングgRPC](https://www.amazon.co.jp/%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0gRPC-%E6%8A%80%E8%A1%93%E3%81%AE%E6%B3%89%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%EF%BC%88NextPublishing%EF%BC%89-%E6%AD%A6%E4%B8%8A-%E5%B0%86%E6%A8%B9-ebook/dp/B087R87L6Z)
