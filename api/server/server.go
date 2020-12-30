@@ -8,7 +8,9 @@ import (
 	"os"
 	"os/signal"
 
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
+
+	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
