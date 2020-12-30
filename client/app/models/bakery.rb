@@ -20,7 +20,7 @@ class Bakery
   def self.bake_pancake(menu)
     req = Pancake::Maker::BakeRequest.new({ menu: pb_menu(menu) })
 
-    res = stub.bake(req)
+    res = stub.bake(req, metadata: metadata)
 
     {
       chef_name: res.pancake.chef_name,
@@ -32,9 +32,9 @@ class Bakery
 
   # receive report
   def self.report
-    res = stub.report(Pancake::Maker::ReportRequest.new())
+    res = stub.report(Pancake::Maker::ReportRequest.new(), metadata: metadata)
 
-    res.report.bake_counts.map {|r| [r.menu, r.count]}.to_h
+    res.report.bake_counts.map { |r| [r.menu, r.count] }.to_h
   end
 
   # convert menu to Protocol Buffers format
@@ -63,6 +63,10 @@ class Bakery
 
   def self.config_dsn
     "127.0.0.1:50051"
+  end
+
+  def self.metadata
+    { authorization: 'bearer hi/mi/tsu' }
   end
 end
 
