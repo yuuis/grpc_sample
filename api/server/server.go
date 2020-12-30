@@ -21,8 +21,6 @@ func main() {
 
 	server := grpc.NewServer()
 
-	// .protoファイルで定義したPancakeBakerServiceに対応している。
-	// gRPCのサーバーにPancakeBakerServiceへのリクエストがあった場合に、渡したハンドラの対応したメソッドを呼び出すよう登録する。
 	api.RegisterPancakeBakerServiceServer(server, handler.NewBakerHandler())
 	reflection.Register(server)
 
