@@ -1,24 +1,21 @@
-# README
+# gRPC Client
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## call
 
-Things you may want to cover:
+```sh
+bundle exec rails c
+```
 
-* Ruby version
+```rb
+# request to bake a pancake  
+Bakery.bake_pancake(Bakery::Menu::CLASSIC)
 
-* System dependencies
+# request to send a report
+Bakery.report
+```
 
-* Configuration
+## update boiler plate codes
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+bundle exec grpc_tools_ruby_protoc -I ../proto/ --ruby_out=app/gen/api/pancake/maker --grpc_out=app/gen/api/pancake/maker ../proto/pancake.proto
+```

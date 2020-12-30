@@ -16,7 +16,7 @@ class Bakery
     SPICY_CURRY = "spicy_curry"
   end
 
-  # パンケーキを焼く
+  # bake pancake
   def self.bake_pancake(menu)
     req = Pancake::Maker::BakeRequest.new({ menu: pb_menu(menu) })
 
@@ -30,14 +30,14 @@ class Bakery
     }
   end
 
-  # レポートを受け取る
+  # receive report
   def self.report
     res = stub.report(Pancake::Maker::ReportRequest.new())
 
     res.report.bake_counts.map {|r| [r.menu, r.count]}.to_h
   end
 
-  # メニューをProtocol Buffers用に変換する
+  # convert menu to Protocol Buffers format
   def self.pb_menu(menu)
     case menu
     when Menu::CLASSIC
