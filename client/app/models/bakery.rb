@@ -32,7 +32,7 @@ class Bakery
 
   # receive report
   def self.report
-    res = stub.report(Pancake::Maker::ReportRequest.new(), metadata: metadata)
+    res = stub.report(Pancake::Maker::ReportRequest.new, metadata: metadata)
 
     res.report.bake_counts.map { |r| [r.menu, r.count] }.to_h
   end

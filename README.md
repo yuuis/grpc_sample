@@ -12,6 +12,12 @@
 ## API Server
 
 ### How to update boiler plate codes for server
+install protobuf and plugins
+```shell script
+brew install protobuf
+go get -u -v github.com/golang/protobuf/protoc-gen-go
+go get -u -v google.golang.org/grpc
+```
 
 ```shell script
 cd grpc_sample
@@ -33,6 +39,7 @@ cd client
 bundle install
 
 bundle exec grpc_tools_ruby_protoc -I ../proto/ --ruby_out=app/gen/api/pancake/maker --grpc_out=app/gen/api/pancake/maker ../proto/pancake.proto
+bundle exec grpc_tools_ruby_protoc -I ../proto/ --ruby_out=app/gen/api/image/uploader --grpc_out=app/gen/api/image/uploader ../proto/image_uploader.proto
 ```
 
 ### Run client
@@ -46,6 +53,11 @@ Bakery.bake_pancake(Bakery::Menu::CLASSIC)
 
 # request to send a report
 Bakery.report
+```
+
+```ruby
+# upload an image
+ImageUploader.chunked_upload('file_path')
 ```
 
 ## Client (`grpc_cli`)
