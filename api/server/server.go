@@ -23,8 +23,13 @@ import (
 )
 
 func main() {
-	port := 50051
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	unaryPort := 50051
+	streamPort := 50052
+	unaryLis, err := net.Listen("tcp", fmt.Sprintf(":%d", unaryPort))
+	if err != nil {
+		log.Fatalf("failed to listern: %v", err)
+	}
+	streamLis, err := net.Listen("tcp", fmt.Sprintf(":%d", streamPort))
 	if err != nil {
 		log.Fatalf("failed to listern: %v", err)
 	}
@@ -36,26 +41,42 @@ func main() {
 	}
 	grpc_zap.ReplaceGrpcLoggerV2(zapLogger)
 
-	server := grpc.NewServer(grpc.UnaryInterceptor(
+	// unary
+	unaryServer := grpc.NewServer(grpc.UnaryInterceptor(
 		grpc_middleware.ChainUnaryServer(
 			grpc_zap.UnaryServerInterceptor(zapLogger),
 			grpc_auth.UnaryServerInterceptor(auth),
 		),
 	))
+	api.RegisterPancakeBakerServiceServer(unaryServer, handler.NewBakerHandler())
+	reflection.Register(unaryServer)
 
-	api.RegisterPancakeBakerServiceServer(server, handler.NewBakerHandler())
-	reflection.Register(server)
+	// stream
+	streamServer := grpc.NewServer(grpc.StreamInterceptor(
+		grpc_middleware.ChainStreamServer(
+			grpc_zap.StreamServerInterceptor(zapLogger),
+			//grpc_auth.StreamServerInterceptor(auth),
+		),
+	))
+	api.RegisterImageUploadServiceServer(streamServer, handler.NewImageUploadHandler())
+	reflection.Register(streamServer)
 
 	go func() {
-		log.Printf("start gRPC server prot %v", port)
-		server.Serve(lis)
+		log.Printf("start gRPC unary server prot %v\n", unaryPort)
+		unaryServer.Serve(unaryLis)
+	}()
+
+	go func() {
+		log.Printf("start gRPC stream server prot %v\n", streamPort)
+		streamServer.Serve(streamLis)
 	}()
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	log.Println("stopping gRPC server...")
-	server.GracefulStop()
+	unaryServer.GracefulStop()
+	streamServer.GracefulStop()
 }
 
 func auth(ctx context.Context) (context.Context, error) {

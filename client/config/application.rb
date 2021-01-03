@@ -39,6 +39,7 @@ module Client
 
     # load grpc boiler plate codes
     config.paths.add Rails.root.join('app', 'gen', 'api', 'pancake', 'maker').to_s, eager_load: true
+    config.paths.add Rails.root.join('app', 'gen', 'api', 'image', 'uploader').to_s, eager_load: true
     config.load_defaults 5.2
     config.autoloader = :classic
   end

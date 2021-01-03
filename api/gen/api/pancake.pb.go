@@ -98,7 +98,7 @@ type Pancake struct {
 
 	ChefName       string                 `protobuf:"bytes,1,opt,name=chef_name,json=chefName,proto3" json:"chef_name,omitempty"`
 	Menu           Pancake_Menu           `protobuf:"varint,2,opt,name=menu,proto3,enum=pancake.maker.Pancake_Menu" json:"menu,omitempty"`
-	TechnicalScore float32                `protobuf:"fixed32,3,opt,name=technical_score,json=technicalScore,proto3" json:"technical_score,omitempty"` // 焼き具合のスコア(0.0 ~ 0.9)
+	TechnicalScore float32                `protobuf:"fixed32,3,opt,name=technical_score,json=technicalScore,proto3" json:"technical_score,omitempty"` // 0.0 ~ 0.9
 	CreateTime     *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 }
 
